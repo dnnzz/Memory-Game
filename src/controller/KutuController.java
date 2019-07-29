@@ -8,7 +8,9 @@ package controller;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Collections;
+import static java.util.Collections.shuffle;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -26,12 +28,32 @@ public class KutuController extends JFrame{
     public Color defaultColor = Color.WHITE;
     public JToggleButton[] button = new JToggleButton[100];
     public Random generator = new Random();
+    private ArrayList<Integer> gameList = new ArrayList<Integer>();
     public int getKutuadedi() {
         return kutuadedi;
     }
 
     public void setKutuadedi(int kutuadedi) {
         this.kutuadedi = kutuadedi;
+    }
+      public void setArrayListText() {
+        for (int i = 0; i < 2; i++) {
+            for (int ii = 1; ii < (kutuadedi / 2) + 1; ii++) {
+                gameList.add(ii);
+            }
+        }
+        shuffle(gameList);
+ 
+        // ///////////////////
+        int newLine = 0;
+        for (int a = 0; a < gameList.size(); a++) {
+            newLine++;
+            System.out.print(" " + gameList.get(a));
+            if (newLine == 4) {
+                System.out.println();
+                newLine = 0;
+            }
+        }
     }
 
     
@@ -40,7 +62,7 @@ public class KutuController extends JFrame{
        
        for (int i = 0; i < kutuadedi; i++) {
             button[i] = new JToggleButton();
-            button[i].setText(Integer.toString(20));
+            button[i].setText("" + gameList.get(i));;
             button[i].setSize(1,1);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);

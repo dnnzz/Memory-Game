@@ -26,9 +26,8 @@ import javax.swing.JToggleButton;
 public class KutuController extends JFrame{
     public int kutuadedi;
     public Color defaultColor = Color.WHITE;
-    public JToggleButton[] button = new JToggleButton[100];
-    public Random generator = new Random();
-    private ArrayList<Integer> gameList = new ArrayList<Integer>();
+    public JToggleButton[] button = new JToggleButton[16];
+    public ArrayList<Integer> gameList = new ArrayList<Integer>();
     public int getKutuadedi() {
         return kutuadedi;
     }
@@ -37,62 +36,42 @@ public class KutuController extends JFrame{
         this.kutuadedi = kutuadedi;
     }
       public void setArrayListText() {
-        for (int i = 0; i < 2; i++) {
-            for (int ii = 1; ii < (kutuadedi / 2) + 1; ii++) {
+        int kadeti = getKutuadedi();
+        if(getKutuadedi()%2==1){
+            kadeti = getKutuadedi()+1;
+        }
+               for (int i = 0; i < 2; i++) {
+            for (int ii = 1; ii < (kadeti / 2) + 1; ii++) {
                 gameList.add(ii);
             }
         }
-        shuffle(gameList);
- 
-        // ///////////////////
-        int newLine = 0;
-        for (int a = 0; a < gameList.size(); a++) {
-            newLine++;
-            System.out.print(" " + gameList.get(a));
-            if (newLine == 4) {
-                System.out.println();
-                newLine = 0;
-            }
-        }
-    }
-
-    
+        shuffle(gameList); 
+ }    
     public void KutuUretGrid(JPanel jp){
        jp.setLayout(new GridLayout(2,4));
+       setArrayListText();
        
-       for (int i = 0; i < kutuadedi; i++) {
+       for (int i = 0; i < gameList.size(); i++) {
             button[i] = new JToggleButton();
-            button[i].setText("" + gameList.get(i));;
+            button[i].setText(Integer.toString(gameList.get(i)));
             button[i].setSize(1,1);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);
             button[i].setVisible(true);
             
 }
-       if(kutuadedi %2 == 1){
-           button[kutuadedi+1] = new JToggleButton("buton");
-           button[kutuadedi+1].setSize(1,1);
-           jp.add(button[kutuadedi+1]);
-           button[kutuadedi+1].setBackground(defaultColor);
-           button[kutuadedi+1].setVisible(true);
-       }
 }
      public void KutuUretFlow(JPanel jp){
       jp.setLayout(new FlowLayout(FlowLayout.LEFT));
-       for (int i = 0; i < kutuadedi; i++) {
-            button[i] = new JToggleButton("buton");
+      setArrayListText();
+       for (int i = 0; i < gameList.size(); i++) {
+            button[i] = new JToggleButton();
+            button[i].setText(Integer.toString(gameList.get(i)));
             button[i].setSize(1,1);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);
             button[i].setVisible(true);
             
 }
-       if(kutuadedi %2 == 1){
-           button[kutuadedi+1] = new JToggleButton("buton");
-           button[kutuadedi+1].setSize(1,1);
-           jp.add(button[kutuadedi+1]);
-           button[kutuadedi+1].setBackground(defaultColor);
-           button[kutuadedi+1].setVisible(true);
-       }
-    }
+}
 }

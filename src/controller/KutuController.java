@@ -8,6 +8,8 @@ package controller;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import static java.util.Collections.shuffle;
@@ -15,19 +17,21 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
 
 /**
  *
  * @author Dnz
  */
-public class KutuController extends JFrame{
+public class KutuController extends JFrame implements ActionListener{
     public int kutuadedi;
     public Color defaultColor = Color.WHITE;
-    public JToggleButton[] button = new JToggleButton[16];
+    public JButton[] button = new JButton[16];
     public ArrayList<Integer> gameList = new ArrayList<Integer>();
+    private int[] btnID = new int[2];
+    private int[] btnValue = new int[2];
     public int getKutuadedi() {
         return kutuadedi;
     }
@@ -40,7 +44,7 @@ public class KutuController extends JFrame{
         if(getKutuadedi()%2==1){
             kadeti = getKutuadedi()+1;
         }
-               for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             for (int ii = 1; ii < (kadeti / 2) + 1; ii++) {
                 gameList.add(ii);
             }
@@ -52,9 +56,9 @@ public class KutuController extends JFrame{
        setArrayListText();
        
        for (int i = 0; i < gameList.size(); i++) {
-            button[i] = new JToggleButton();
-            button[i].setText(Integer.toString(gameList.get(i)));
+            button[i] = new JButton();
             button[i].setSize(1,1);
+            button[i].addActionListener(this);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);
             button[i].setVisible(true);
@@ -65,8 +69,7 @@ public class KutuController extends JFrame{
       jp.setLayout(new FlowLayout(FlowLayout.LEFT));
       setArrayListText();
        for (int i = 0; i < gameList.size(); i++) {
-            button[i] = new JToggleButton();
-            button[i].setText(Integer.toString(gameList.get(i)));
+            button[i] = new JButton();
             button[i].setSize(1,1);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);
@@ -74,4 +77,41 @@ public class KutuController extends JFrame{
             
 }
 }
+        public boolean sameValues() {
+        if (btnValue[0] == btnValue[1]) {
+            return true;
+        }
+        return false;
+    }
+        @Override
+    public void actionPerformed(ActionEvent e) {
+        for (int i = 0; i < button.length; i++) {
+            if (button[i] == e.getSource()) {
+                button[i].setText("" + gameList.get(i));
+                button[i].setEnabled(false);
+                int counter = 0;
+                counter++;
+                if (counter == 3) {
+                    if (sameValues()) {
+                        button[btnID[0]].setEnabled(false);
+                        button[btnID[1]].setEnabled(false);
+                    } else {
+                        button[btnID[0]].setEnabled(true);
+                        button[btnID[0]].setText("");
+                        button[btnID[1]].setEnabled(true);
+                        button[btnID[1]].setText("");
+                    }
+                    counter = 1;
+                }
+                if (counter == 1) {
+                    btnID[0] = i;
+                    btnValue[0] = gameList.get(i);
+                }
+                if (counter == 2) {
+                    btnID[1] = i;
+                    btnValue[1] = gameList.get(i);
+                }
+            }
+        }
+    }
 }

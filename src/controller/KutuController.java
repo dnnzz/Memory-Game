@@ -32,6 +32,7 @@ public class KutuController extends JFrame implements ActionListener{
     public ArrayList<Integer> gameList = new ArrayList<Integer>();
     private int[] btnID = new int[2];
     private int[] btnValue = new int[2];
+    int counter = 0;
     public int getKutuadedi() {
         return kutuadedi;
     }
@@ -70,7 +71,8 @@ public class KutuController extends JFrame implements ActionListener{
       setArrayListText();
        for (int i = 0; i < gameList.size(); i++) {
             button[i] = new JButton();
-            button[i].setSize(1,1);
+            button[i].setSize(4,4);
+            button[i].addActionListener(this);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);
             button[i].setVisible(true);
@@ -89,7 +91,6 @@ public class KutuController extends JFrame implements ActionListener{
             if (button[i] == e.getSource()) {
                 button[i].setText("" + gameList.get(i));
                 button[i].setEnabled(false);
-                int counter = 0;
                 counter++;
                 if (counter == 3) {
                     if (sameValues()) {

@@ -40,32 +40,42 @@ public class KutuController extends JFrame implements ActionListener{
     public void setKutuadedi(int kutuadedi) {
         this.kutuadedi = kutuadedi;
     }
-      public void setArrayListText() {
+     
+    // kutu değerlerini arraylist e aldım
+    public void setArrayListText() {
         int kadeti = getKutuadedi();
+        // kutuadedi tek sayı ise kutu adedini bir arttırmasını sağlayan
+        // fonksiyonu yazdım.
         if(getKutuadedi()%2==1){
             kadeti = getKutuadedi()+1;
         }
+        // dıştaki for 2 kere dönecek içteki for ise kutuadedinin yarısından
+        // bir fazla dönüp benim sayılarımı çifter hale getirecek. örn 123123.
         for (int i = 0; i < 2; i++) {
             for (int ii = 1; ii < (kadeti / 2) + 1; ii++) {
                 gameList.add(ii);
             }
         }
+       
+        // shuffle fonksiyonu ile sayıların yerlerini karıştırdım.
         shuffle(gameList); 
- }    
+ }   // grid layout formunda buttonlarımı ürettim. 
     public void KutuUretGrid(JPanel jp){
        jp.setLayout(new GridLayout(2,4));
        setArrayListText();
-       
+       // gameList arraylisti kadar foru döndürdüm ve butonuma özelliklerini ekledim.
        for (int i = 0; i < gameList.size(); i++) {
             button[i] = new JButton();
             button[i].setSize(1,1);
+            //Action listener ile eşleşmeleri sağlayak fonksiyonları yazdım.
+            //Dikkat this ekleyebilmem için implement etmem lazım sınıfıma.
             button[i].addActionListener(this);
             jp.add(button[i]);
             button[i].setBackground(defaultColor);
             button[i].setVisible(true);
             
 }
-}
+} // Flow Layout formunda yukardaki işlemlerin aynısını yaptırdım.
      public void KutuUretFlow(JPanel jp){
       jp.setLayout(new FlowLayout(FlowLayout.LEFT));
       setArrayListText();
@@ -78,13 +88,15 @@ public class KutuController extends JFrame implements ActionListener{
             button[i].setVisible(true);
             
 }
-}
+}  // İkili karşılaştırmayı sağlayacak 2 elemenalı btnValue arrayi vardı
+   // bu fonksiyonda boolean döndürüp sameValue yani aynı değerde olup olmadığına
+   //bakacağım.
         public boolean sameValues() {
         if (btnValue[0] == btnValue[1]) {
             return true;
         }
         return false;
-    }
+    } // Actionperformed methodunu override ettim.
         @Override
     public void actionPerformed(ActionEvent e) {
         for (int i = 0; i < button.length; i++) {
